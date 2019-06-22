@@ -17,8 +17,17 @@ class GameViewController: UIViewController {
         
         if let skView = self.view as? SKView {
             if skView.scene == nil {
-                let aspectRatio = skView.bounds.size.height / skView.bounds.size.width
+                let aspectRatio = (skView.bounds.size.height / skView.bounds.size.width)
                 let scene = GameScene(size: CGSize(width: 320, height: 320 * aspectRatio))
+                
+                skView.showsFPS = false
+                skView.showsNodeCount = false
+                skView.showsPhysics = false
+                skView.ignoresSiblingOrder = true
+                
+                scene.scaleMode = .aspectFit
+                
+                skView.presentScene(scene)
             }
         }
     }
@@ -28,11 +37,7 @@ class GameViewController: UIViewController {
     }
 
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        if UIDevice.current.userInterfaceIdiom == .phone {
-            return .allButUpsideDown
-        } else {
-            return .all
-        }
+        return [.portrait, .portraitUpsideDown]
     }
 
     override var prefersStatusBarHidden: Bool {
